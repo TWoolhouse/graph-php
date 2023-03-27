@@ -136,7 +136,7 @@
      * @access protected
      *
      **/
-    protected $cfg = [];
+    public $cfg = [];
 
 
 
@@ -1185,7 +1185,7 @@
 	public function output_gd_png_base64( $cfg = null){
         
         $this->draw_to_output( $cfg );
-
+        
 		return 'data:image/png;base64,' . base64_encode( $this->output_gd_png_raw( ) );
 	} // /output_gd_png_base64()
 	
@@ -1213,6 +1213,20 @@
 		return $content;
 	} // /output_gd_png_raw()
 
+
+    /**
+     * writes an png file
+     * 
+     * @return string $png_stream
+     */
+	public function write_gd_file($filename ){
+		
+		imagepng( $this->gd, $filename );
+		$fp = fopen($filename, "rb");
+		$content = fread($fp, filesize($filename));
+		fclose($fp);
+        unset( $fp );
+	} // /write_gd_file()
 
 
     /**
